@@ -1,12 +1,12 @@
 # drug efficacy optimization example for BME 2315
 # made by Lavie, fall 2025
 
-#%% import libraries
+# import libraries
 import numpy as np
 import matplotlib.pyplot as plt
 
 
-#%% define drug models
+# define drug models
 
 # define toxicity levels for each drug (lambda)
 metformin_lambda = 0.5
@@ -31,18 +31,20 @@ def escitalopram(x):  # weaker efficacy, low toxicity
 def combined(x): # combine the 3 drugs to plot "combined effect"
     return metformin(x) + lisinopril(x) + escitalopram(x)
 
-#%% plot drug efficacies
+# plot drug efficacies
 x = np.linspace(0, 15, 100)
 fig, ax = plt.subplots(figsize=(10, 6))
 plt.plot(x, metformin(x), label='Metformin', color='blue')
 plt.plot(x, lisinopril(x), label='Lisinopril', color='orange')
 plt.plot(x, escitalopram(x), label='Escitalopram', color='green')
+plt.plot(x, combined(x), linestyle='--', linewidth=3, label='Combined Effect', color='red') # added combined effect to the plot
 plt.title('Drug Efficacy vs Dosage')
 plt.xlabel('Dosage (mg)')
 plt.ylabel('Net Effect')
 plt.legend()
+plt.show()
 
-# %% Find optimal dosages for each drug
+# Find optimal dosages for each drug
 
 # First method: Steepest Ascent using the update rule
 
@@ -84,7 +86,7 @@ opt_dose_combined, opt_effect_combined = steepest_ascent(combined, x0=1.0)
 print(f"Steepest Ascent Method - Optimal Combined Dose: {opt_dose_combined:.2f} mg")
 print(f"Steepest Ascent Method - Optimal Combined Effect: {opt_effect_combined*100:.2f}%")
 
-# %% Newton's method
+# Newton's method
 
 # requires second derivative
 def second_derivative(f, x, h=1e-4):
@@ -124,3 +126,13 @@ print(f"Newton's Method - Optimal Lisinopril Effect: {opt_effect_lisinopril_nm*1
 opt_dose_escitalopram_nm, opt_effect_escitalopram_nm = newtons_method(escitalopram, x0=1.0)
 print(f"Newton's Method - Optimal Escitalopram Dose: {opt_dose_escitalopram_nm:.2f} mg")
 print(f"Newton's Method - Optimal Escitalopram Effect: {opt_effect_escitalopram_nm*100:.2f}%")
+
+# combined
+opt_dose_combined_nm, opt_effect_combined_nm = newtons_method(combined, x0=1.0)
+print(f"Newton's Method - Optimal Combined Dose: {opt_dose_combined_nm:.2f} mg")
+print(f"Newton's Method - Optimal Combined Effect: {opt_effect_combined_nm*100:.2f}%")
+
+#lambda_values = np.linspace(0.1, 1.5, 50)
+
+#for lam in lambda_values:
+    
