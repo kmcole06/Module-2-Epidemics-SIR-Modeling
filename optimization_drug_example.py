@@ -28,6 +28,9 @@ def escitalopram(x):  # weaker efficacy, low toxicity
     toxicity = 0.1 * x**2 / 120
     return efficacy - escitalopram_lambda * toxicity
 
+def combined(x): # combine the 3 drugs to plot "combined effect"
+    return metformin(x) + lisinopril(x) + escitalopram(x)
+
 #%% plot drug efficacies
 x = np.linspace(0, 15, 100)
 fig, ax = plt.subplots(figsize=(10, 6))
@@ -75,6 +78,11 @@ print(f"Steepest Ascent Method - Optimal Lisinopril Effect: {opt_effect_lisinopr
 opt_dose_escitalopram, opt_effect_escitalopram = steepest_ascent(escitalopram, x0=1.0)
 print(f"Steepest Ascent Method - Optimal Escitalopram Dose: {opt_dose_escitalopram:.2f} mg")
 print(f"Steepest Ascent Method - Optimal Escitalopram Effect: {opt_effect_escitalopram*100:.2f}%")
+
+#combined
+opt_dose_combined, opt_effect_combined = steepest_ascent(combined, x0=1.0)
+print(f"Steepest Ascent Method - Optimal Combined Dose: {opt_dose_combined:.2f} mg")
+print(f"Steepest Ascent Method - Optimal Combined Effect: {opt_effect_combined*100:.2f}%")
 
 # %% Newton's method
 
