@@ -132,7 +132,20 @@ opt_dose_combined_nm, opt_effect_combined_nm = newtons_method(combined, x0=1.0)
 print(f"Newton's Method - Optimal Combined Dose: {opt_dose_combined_nm:.2f} mg")
 print(f"Newton's Method - Optimal Combined Effect: {opt_effect_combined_nm*100:.2f}%")
 
-#lambda_values = np.linspace(0.1, 1.5, 50)
 
-#for lam in lambda_values:
+#Modifying Metformin lambda value
+lambda_values = np.linspace(0.1, 1.5, 50) # long list of potential lambda values
+best_lambda = None
+smallest_diff = 1e9
+
+for lam in lambda_values:
+    metformin_lambda = lam
+    dose, _ = newtons_method(metformin, x0=1.0) # just getting the dose, not the effect
+    diff = abs(dose - opt_dose_combined)
+    if diff < smallest_diff:
+        smallest_diff = diff
+        best_lambda = lam
+
+print(best_lambda)
+
     
