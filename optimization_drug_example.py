@@ -141,7 +141,7 @@ smallest_diff = 1e9
 for lam in lambda_values:
     metformin_lambda = lam
     dose, _ = newtons_method(metformin, x0=1.0) # just getting the dose, not the effect
-    diff = abs(dose - opt_dose_combined)
+    diff = abs(dose - opt_dose_combined_nm)
     if diff < smallest_diff:
         smallest_diff = diff
         best_lambda = lam
