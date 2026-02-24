@@ -20,3 +20,13 @@ plt.ylabel('Active Infections')
 plt.title('Active Infections vs Day (Data Release #1)')
 plt.show()
 # %%
+
+
+
+# Lecture Questions Post Day 1
+#What do you notice about the initial infections?
+ # Infections are low in the biggining but rapidly accelerating over the course of time.
+#How could we measure how quickly its spreading?
+ # We can measure this by studying growth rate, doubling time, and repreduction number. 
+#What information about the virus would be helpful in determining the shape of the outbreak curve?
+ #How the virus is transmitted (airborne, etc.), incubation period, infectious period, behavioral factors 
