@@ -4,7 +4,7 @@ import matplotlib.pyplot as plt
 
 #%%
 # Load the data
-data = pd.read_csv('/Users\yqr8pz\Documents\BME 2315\Module-2-Epidemics-SIR-Modeling\Data\mystery_virus_daily_active_counts_RELEASE#1.csv', parse_dates=['date'], header=0, index_col=None)
+data = pd.read_csv('/Users/vkb5cq/Desktop/Spring 2026/BME 2315/Module-2-Epidemics-SIR-Modeling/Data/mystery_virus_daily_active_counts_RELEASE#1.csv', parse_dates=['date'], header=0, index_col=None)
 
 #%%
 # Make a plot of the active cases over time
@@ -14,7 +14,7 @@ data['day'] = (data['date'] - data['date'].min()).dt.days
 
 # Plot
 plt.figure()
-plt.plot(data['day'], data['active reported daily cases'])
+plt.scatter(data['day'], data['active reported daily cases'])
 plt.xlabel('Day')
 plt.ylabel('Active Infections')
 plt.title('Active Infections vs Day (Data Release #1)')
