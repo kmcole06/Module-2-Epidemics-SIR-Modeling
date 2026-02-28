@@ -25,15 +25,14 @@ data['day'] = (data['date'] - data['date'].min()).dt.days
 t = data['day'].to_numpy()
 I = data['active reported daily cases'].to_numpy()
 
-# ----------------------------
-# Define exponential model
-# ----------------------------
+
+# Defines exponential model
+
 def exponential_model(t, I0, r):
     return I0 * np.exp(r * t)
 
-# ----------------------------
-# Perform curve fit
-# ----------------------------
+
+# Performs curve fit
 params, covariance = curve_fit(exponential_model, t, I, p0=[I[0], 0.2])
 
 I0_fit, r_fit = params
@@ -41,15 +40,14 @@ I0_fit, r_fit = params
 print("Fitted I0 =", I0_fit)
 print("Fitted growth rate r =", r_fit)
 
-# ----------------------------
+
 # Create smooth curve for plotting
-# ----------------------------
+
 t_smooth = np.linspace(min(t), max(t), 300)
 I_fit = exponential_model(t_smooth, I0_fit, r_fit)
 
-# ----------------------------
+
 # Plot data + best-fit curve
-# ----------------------------
 plt.figure()
 plt.scatter(t, I, label='Observed Data')
 plt.plot(t_smooth, I_fit, linewidth=2, label='Best-Fit Exponential Curve')
@@ -59,15 +57,16 @@ plt.title('Exponential Curve Fit to Infection Data')
 plt.legend()
 plt.show()
 
-# ----------------------------
+
 # Compute R0
 # Infectious period D = 2 days
 # R0 = 1 + rD
-# ----------------------------
+
 D = 2
 R0 = 1 + r_fit * D
 
 print("Estimated R0 =", R0)
 
-
+# Used ChatGPT 5.2 to help learn more about the line of best fit coding 
+# OpenAI. (2026). ChatGPT (GPT-5.2 Thinking) [Large language model]. https://chat.openai.com
 
