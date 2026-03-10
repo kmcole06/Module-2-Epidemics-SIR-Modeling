@@ -67,8 +67,7 @@ R0 = 1 + r_fit * D
 
 print("Estimated R0 =", R0)
 
-# Used ChatGPT 5.2 to help learn more about the line of best fit coding 
-# OpenAI. (2026). ChatGPT (GPT-5.2 Thinking) [Large language model]. https://chat.openai.com
+
 
 #%% ===============================
 # Estimate beta, sigma, gamma using grid search + Euler method
@@ -161,3 +160,5 @@ plt.show()
 # Compute R0 from SEIR parameters
 R0_seir = best_beta / best_gamma
 print("SEIR Estimated R0 =", R0_seir)
+# Used ChatGPT 5.2 to help learn more about the line of best fit coding 
+# OpenAI. (2026). ChatGPT (GPT-5.2 Thinking) [Large language model]. https://chat.openai.com
