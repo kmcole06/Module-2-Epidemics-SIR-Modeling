@@ -112,9 +112,9 @@ def euler_SEIR(beta, sigma, gamma):
 
 
 # Parameter ranges to test
-beta_range = np.linspace(0.1,1.0,15)
-sigma_range = np.linspace(0.1,1.0,15)
-gamma_range = np.linspace(0.05,0.5,15)
+beta_range = np.linspace(0.2, 1.5, 15)
+sigma_range = np.linspace(0.055, 0.085, 15)
+gamma_range = np.linspace(0.4, 0.6, 15)
 
 best_SSE = np.inf
 best_beta = None
