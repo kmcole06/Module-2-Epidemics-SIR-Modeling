@@ -74,7 +74,7 @@ print("Estimated R0 =", R0)
 #=================================
 
 # Initial population assumptions
-N = 1000000
+N = 17900
 
 I0 = I[0]
 E0 = I0
@@ -160,5 +160,33 @@ plt.show()
 # Compute R0 from SEIR parameters
 R0_seir = best_beta / best_gamma
 print("SEIR Estimated R0 =", R0_seir)
-# Used ChatGPT 5.2 to help learn more about the line of best fit coding 
+
+# Used ChatGPT 5.2 to help learn more about the line of best fit coding and SEIR modeling 
 # OpenAI. (2026). ChatGPT (GPT-5.2 Thinking) [Large language model]. https://chat.openai.com
+
+# Real data infections
+I_data = data['active reported daily cases'].to_numpy()
+
+# Model infections
+I_model = I_model
+
+# ----- Peak number of cases -----
+peak_data = np.max(I_data)
+peak_model = np.max(I_model)
+
+peak_error = abs(peak_model - peak_data) / peak_data * 100
+
+print("Peak cases (data) =", peak_data)
+print("Peak cases (model) =", peak_model)
+print("Peak % relative error =", peak_error)
+
+
+# ----- Peak day -----
+peak_day_data = t[np.argmax(I_data)]
+peak_day_model = t[np.argmax(I_model)]
+
+day_error = abs(peak_day_model - peak_day_data) / peak_day_data * 100
+
+print("Peak day (data) =", peak_day_data)
+print("Peak day (model) =", peak_day_model)
+print("Peak day % relative error =", day_error)
