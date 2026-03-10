@@ -70,3 +70,94 @@ print("Estimated R0 =", R0)
 # Used ChatGPT 5.2 to help learn more about the line of best fit coding 
 # OpenAI. (2026). ChatGPT (GPT-5.2 Thinking) [Large language model]. https://chat.openai.com
 
+#%% ===============================
+# Estimate beta, sigma, gamma using grid search + Euler method
+#=================================
+
+# Initial population assumptions
+N = 1000000
+
+I0 = I[0]
+E0 = I0
+R0_init = 0
+S0 = N - I0 - E0
+
+# Euler SEIR model
+def euler_SEIR(beta, sigma, gamma):
+
+    S = np.zeros(len(t))
+    E = np.zeros(len(t))
+    I_model = np.zeros(len(t))
+    R = np.zeros(len(t))
+
+    S[0] = S0
+    E[0] = E0
+    I_model[0] = I0
+    R[0] = R0_init
+
+    dt = 1
+
+    for i in range(len(t)-1):
+
+        dS = -beta * S[i] * I_model[i] / N
+        dE = beta * S[i] * I_model[i] / N - sigma * E[i]
+        dI = sigma * E[i] - gamma * I_model[i]
+        dR = gamma * I_model[i]
+
+        S[i+1] = S[i] + dS * dt
+        E[i+1] = E[i] + dE * dt
+        I_model[i+1] = I_model[i] + dI * dt
+        R[i+1] = R[i] + dR * dt
+
+    return S, E, I_model, R
+
+
+# Parameter ranges to test
+beta_range = np.linspace(0.1,1.0,15)
+sigma_range = np.linspace(0.1,1.0,15)
+gamma_range = np.linspace(0.05,0.5,15)
+
+best_SSE = np.inf
+best_beta = None
+best_sigma = None
+best_gamma = None
+
+
+# Grid search
+for b in beta_range:
+    for s in sigma_range:
+        for g in gamma_range:
+
+            S,E,I_model,R = euler_SEIR(b,s,g)
+
+            SSE = np.sum((I_model - I)**2)
+
+            if SSE < best_SSE:
+
+                best_SSE = SSE
+                best_beta = b
+                best_sigma = s
+                best_gamma = g
+
+
+print("Best beta =", best_beta)
+print("Best sigma =", best_sigma)
+print("Best gamma =", best_gamma)
+print("Lowest SSE =", best_SSE)
+
+
+# Plot best SEIR fit
+S,E,I_model,R = euler_SEIR(best_beta,best_sigma,best_gamma)
+
+plt.figure()
+plt.scatter(t, I, label="Observed Data")
+plt.plot(t, I_model, label="Best SEIR Model")
+plt.xlabel("Day")
+plt.ylabel("Active Infections")
+plt.legend()
+plt.show()
+
+
+# Compute R0 from SEIR parameters
+R0_seir = best_beta / best_gamma
+print("SEIR Estimated R0 =", R0_seir)
